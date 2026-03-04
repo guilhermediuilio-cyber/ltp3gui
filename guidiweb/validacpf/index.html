@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF_8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>CPF</title>
+</head>
+<body>
+    <form method="POST" action="" name="cadastrar">
+        <p><b>Informe o CPF a ser invalido:</b></p>
+    <div>
+        <input id="cpf" onkeyup="document.getElementById('validation').innerHTML =validaCPF(this.value)">
+        <b> <span id="validation"></span></b>
+    </div>
+    </form>
+<script>
+    function validaCPF(cpf){
+        var Soma = 0
+        var Resto
+
+        var strCPF = String(cpf).replace(/[^\d]/g,'')
+        if(strCPF.length !== 11)
+        return 'Inválido'
+        if ([
+            '00000000000',
+            '11111111111',
+            '22222222222',
+            '33333333333',
+            '44444444444',
+            '55555555555',
+            '66666666666',
+            '77777777777',
+            '88888888888',
+            '99999999999'
+        ].indexOf(strCPF)!== -1)
+        return 'Inválido'
+        //Início do Cálculo do 1° DV
+        for (i=1;i<=9;i++)
+        Soma = Soma + parseInt(strCPF.substring(i-1,i))*(11 -i);
+        Resto=(Soma * 10)%11
+        if ((Resto == 10) || (Resto == 11))
+        Resto = 0
+        if(Resto != parseInt(strCPF.substring(9,10)))
+        return 'Inválido'
+        return 'Ok'
+        //Início do Cálculo do 2° DV
+        for (i=1;i<=10;i++)
+        Soma = Soma + parseInt(strCPF.substring(i-1,i))*(12 -i);
+        Resto=(Soma * 10)%11
+        if ((Resto == 10) || (Resto == 11))
+        Resto = 0
+        if(Resto != parseInt(strCPF.substring(10,11)))
+        return 'Inválido'
+        
+    return 'Ok'
+    
+    //Código a ser inserido no formulário do CPF:
+    }
+</script>
+</body>
+</html>
